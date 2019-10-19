@@ -59,15 +59,10 @@ sysinfo.txt
 crashlytics-build.properties
 
 # Custom added git ignores
-*/obj/*
-*.dll
-
 .idea/*
 */.idea/*
 
-*TEMP*
-*temp*
-*TMP*
-*tmp*
-
 *[Cc][Aa][Cc][Hh][Ee]*
+*/obj/*
+*.dll
+*[Tt][Ee][Mm][Pp]*
