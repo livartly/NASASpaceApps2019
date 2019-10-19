@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Planet : Sphere
 {
-    [Header("Planet Configurations:")]
-    public int subDivisions;
-    
+    [Header("Planet Configurations:")] public int subDivisions;
+
     void Start()
     {
         InitAsIcosahedron();
@@ -20,9 +19,8 @@ public class Planet : Sphere
         //Assign data to mesh
         GetComponent<MeshFilter>().mesh = mesh;
         mesh.vertices = vertices.ToArray();
-        mesh.triangles = Triangle.TrianglesToIntArray(triangles); //Could add a loop and delay for a nice generating effect
-        mesh.RecalculateNormals(); //Update normals for lightmapping
+        mesh.triangles =
+            Triangle.TrianglesToIntArray(triangles); //Could add a loop and delay for a nice generating effect
+        mesh.RecalculateNormals(); //Update normals for light mapping
     }
-
-    
 }
