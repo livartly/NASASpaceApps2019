@@ -118,16 +118,22 @@ public class Sphere : MonoBehaviour
         return ret;
     }
 
-    protected IEnumerator GeneratePieceByPiece(Mesh mesh, float delay, int pieceSize)
+    protected IEnumerator GenerateMeshPieceByPiece(float delay, int pieceSize)
     {
+        Mesh mesh = new Mesh();
+        //Assign data to mesh
+        GetComponent<MeshFilter>().mesh = mesh;
+
+
         List<Triangle> currentTriangles = new List<Triangle>();
 
-        for (int i = 0; i < (triangles.Count * pieceSize); i++)
+        for (int i = 0; i < (triangles.Count / pieceSize); i++)
         {
             mesh.Clear();
             for (int j = 0; j < pieceSize; j++)
             {
-                currentTriangles.Add(triangles[(i * 4) + j]);
+                Debug.Log((i * pieceSize) + j);
+                currentTriangles.Add(triangles[(i * pieceSize) + j]);
             }
             mesh.vertices = vertices.ToArray();
             mesh.triangles = Triangle.TrianglesToIntArray(currentTriangles);
@@ -135,7 +141,13 @@ public class Sphere : MonoBehaviour
             yield return new WaitForSeconds(delay);
 
         }
-
-        
+        int leftOver = triangles.Count % pieceSize;
+        for (int i = 0; i < leftOver; i++)
+        {
+            currentTriangles.Add(triangles[triangles.Count - 1 - i]);
+        }
+        mesh.vertices = vertices.ToArray();
+        mesh.triangles = Triangle.TrianglesToIntArray(currentTriangles);
+        mesh.RecalculateNormals();
     }
 }
