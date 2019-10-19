@@ -12,4 +12,14 @@ public class Planet : Sphere
         Subdivide(subDivisions);
         StartCoroutine(GenerateMeshPieceByPiece(0.02f, 10));
     }
+
+
+
+    void OnMouseDown()
+    {
+        UserInterface.Instance.OpenMenu("PlanetMenu");
+        UserInterface.Instance.CloseMenu("FreeRoamMenu");
+        UserInterface.Instance.CloseMenu("StarMenu");
+    }
+
 }

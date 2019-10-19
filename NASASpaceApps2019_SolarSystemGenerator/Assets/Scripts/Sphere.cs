@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Snippets of code take from Peter Winslow:
+//https://medium.com/@peter_winslow/creating-procedural-planets-in-unity-part-1-df83ecb12e91
 public class Sphere : MonoBehaviour
 {
     protected List<Triangle> triangles;
