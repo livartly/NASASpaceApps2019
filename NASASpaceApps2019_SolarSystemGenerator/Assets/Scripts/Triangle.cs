@@ -8,7 +8,7 @@ public class Triangle
 
     public Triangle(int a, int b, int c)
     {
-        vertices = new List<int>() { a, b, c };
+        vertices = new List<int>() {a, b, c};
     }
 
     public static int[] TrianglesToIntArray(List<Triangle> tL)
@@ -21,6 +21,7 @@ public class Triangle
                 tris.Add(i);
             }
         }
+
         return tris.ToArray();
     }
 }

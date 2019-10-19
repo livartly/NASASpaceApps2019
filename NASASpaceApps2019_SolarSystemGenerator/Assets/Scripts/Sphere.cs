@@ -81,6 +81,7 @@ public class Sphere : MonoBehaviour
                 newTris.Add(new Triangle(c, ca, bc));
                 newTris.Add(new Triangle(ab, bc, ca));
             }
+
             // Replace all our old Triangles with the new set of
             // subdivided ones.
             triangles = newTris;
