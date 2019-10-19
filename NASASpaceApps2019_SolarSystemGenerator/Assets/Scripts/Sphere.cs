@@ -7,7 +7,7 @@ public class Sphere : MonoBehaviour
     protected List<Triangle> triangles;
     protected List<Vector3> vertices;
 
-    public void InitAsIcosahedron()
+    protected void InitAsIcosahedron()
     {
         triangles = new List<Triangle>();
         vertices = new List<Vector3>();
@@ -56,7 +56,7 @@ public class Sphere : MonoBehaviour
         triangles.Add(new Triangle(9, 8, 1));
     }
 
-    public void Subdivide(int recursions)
+    protected void Subdivide(int recursions)
     {
         var midPointCache = new Dictionary<int, int>();
 
@@ -87,7 +87,7 @@ public class Sphere : MonoBehaviour
         }
     }
 
-    public int GetMidPointIndex(Dictionary<int, int> cache, int indexA, int indexB)
+    protected int GetMidPointIndex(Dictionary<int, int> cache, int indexA, int indexB)
     {
         // We create a key out of the two original indices
         // by storing the smaller index in the upper two bytes
@@ -116,5 +116,26 @@ public class Sphere : MonoBehaviour
 
         cache.Add(key, ret);
         return ret;
+    }
+
+    protected IEnumerator GeneratePieceByPiece(Mesh mesh, float delay, int pieceSize)
+    {
+        List<Triangle> currentTriangles = new List<Triangle>();
+
+        for (int i = 0; i < (triangles.Count * pieceSize); i++)
+        {
+            mesh.Clear();
+            for (int j = 0; j < pieceSize; j++)
+            {
+                currentTriangles.Add(triangles[(i * 4) + j]);
+            }
+            mesh.vertices = vertices.ToArray();
+            mesh.triangles = Triangle.TrianglesToIntArray(currentTriangles);
+            mesh.RecalculateNormals();
+            yield return new WaitForSeconds(delay);
+
+        }
+
+        
     }
 }

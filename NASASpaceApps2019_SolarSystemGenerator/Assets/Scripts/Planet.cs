@@ -11,17 +11,42 @@ public class Planet : Sphere
     {
         InitAsIcosahedron();
         Subdivide(subDivisions);
-        GenerateMesh();
+        StartCoroutine(GenerateMeshPieceByPiece(0.02f, 10));
     }
 
-    private void GenerateMesh()
+
+
+    IEnumerator GenerateMeshPieceByPiece(float delay, int pieceSize)
     {
         Mesh mesh = new Mesh();
         //Assign data to mesh
         GetComponent<MeshFilter>().mesh = mesh;
+
+
+        List<Triangle> currentTriangles = new List<Triangle>();
+        
+        for (int i = 0 ; i < (triangles.Count / pieceSize) ; i++)
+        {
+            mesh.Clear();
+            for (int j = 0; j < pieceSize; j++)
+            {
+                Debug.Log((i * pieceSize) + j);
+                currentTriangles.Add(triangles[(i * pieceSize) + j]);
+            }
+            mesh.vertices = vertices.ToArray();
+            mesh.triangles = Triangle.TrianglesToIntArray(currentTriangles);
+            mesh.RecalculateNormals();
+            yield return new WaitForSeconds(delay);
+
+        }
+        int leftOver = triangles.Count % pieceSize;
+        for (int i = 0; i < leftOver; i++)
+        {
+            currentTriangles.Add(triangles[triangles.Count - 1 - i]);
+        }
         mesh.vertices = vertices.ToArray();
-        mesh.triangles = Triangle.TrianglesToIntArray(triangles); //Could add a loop and delay for a nice generating effect
-        mesh.RecalculateNormals(); //Update normals for lightmapping
+        mesh.triangles = Triangle.TrianglesToIntArray(currentTriangles);
+        mesh.RecalculateNormals();
     }
 
     
