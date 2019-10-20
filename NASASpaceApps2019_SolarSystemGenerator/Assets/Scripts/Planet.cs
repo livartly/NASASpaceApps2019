@@ -17,9 +17,14 @@ public class Planet : Sphere
 
     void OnMouseDown()
     {
+        if (UserInterface.Instance.FindCurrentActiveMenu() == "PlanetMenu") return;
+        if (UserInterface.Instance.FindCurrentActiveMenu() == "StarMenu") return;
+
+
         UserInterface.Instance.OpenMenu("PlanetMenu");
         UserInterface.Instance.CloseMenu("FreeRoamMenu");
-        UserInterface.Instance.CloseMenu("StarMenu");
+        FocusCamera.Instance.focus = gameObject;
+        FocusCamera.Instance.gameObject.SetActive(true);
     }
 
 }
