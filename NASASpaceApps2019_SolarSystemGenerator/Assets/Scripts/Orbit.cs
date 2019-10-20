@@ -7,9 +7,9 @@ public class Orbit : MonoBehaviour
     [SerializeField] private GameObject staticBody;
 
     /// <summary>
-    /// Distance between movingBody and staticBody in world space coordinates
+    /// Distance between movingBody and the surface of the star
     /// </summary>
-    public int distance;
+    public float distanceFromSurface;
 
     /// <summary>
     /// Displayed speed of revolutions per second.
@@ -18,6 +18,7 @@ public class Orbit : MonoBehaviour
 
     public void Update()
     {
+        float distance = distanceFromSurface + staticBody.transform.localScale.x;
         var staticBodyPos = staticBody.transform.position;
         var movingBodyPos = transform.position;
         var deltaPos = staticBodyPos - movingBodyPos;

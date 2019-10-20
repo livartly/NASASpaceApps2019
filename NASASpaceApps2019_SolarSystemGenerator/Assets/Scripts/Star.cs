@@ -13,6 +13,7 @@ public class Star : MonoBehaviour
 
         UserInterface.Instance.OpenMenu("StarMenu");
         UserInterface.Instance.CloseMenu("FreeRoamMenu");
+        UserInterface.Instance.currentFocus = gameObject;
         FocusCamera.Instance.focus = gameObject;
         FocusCamera.Instance.gameObject.SetActive(true);
     }

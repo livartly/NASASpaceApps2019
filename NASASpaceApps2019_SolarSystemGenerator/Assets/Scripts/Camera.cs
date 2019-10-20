@@ -7,8 +7,8 @@ public class Camera : MonoBehaviour
     private Camera() { }
     public static Camera Instance { get; private set; }
     
-    public float speedNormal = 10.0f;
-    public float speedFast = 50.0f;
+    public float speedNormal = 20.0f;
+    public float speedFast = 100.0f;
 
     public float mouseSensitivityX = 5.0f;
     public float mouseSensitivityY = 5.0f;

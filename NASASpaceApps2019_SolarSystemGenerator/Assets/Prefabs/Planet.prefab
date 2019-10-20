@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7281284578536857233}
-  - component: {fileID: 7281284578536857232}
+  - component: {fileID: 7771026623585678432}
   - component: {fileID: 2650060342556165604}
   - component: {fileID: 1287469840219617116}
   - component: {fileID: 7281284578536857231}
@@ -37,7 +37,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7281284578536857232
+--- !u!114 &7771026623585678432
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,7 +49,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180a9e04f8a60b84bb283cc47a384d5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  subDivisions: 4
 --- !u!114 &2650060342556165604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   staticBody: {fileID: 0}
-  distance: 10
+  distanceFromSurface: 0
   speed: 0.03
 --- !u!114 &1287469840219617116
 MonoBehaviour:
@@ -86,7 +85,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7281284578536857229}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &7281284578536857230
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -136,7 +135,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!96 &2880555137489584452
 TrailRenderer:
@@ -177,7 +176,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 50
+  m_Time: 20
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -186,7 +185,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.10309219
+        value: 0.1890297
         inSlope: 0
         outSlope: 0
         tangentMode: 0
