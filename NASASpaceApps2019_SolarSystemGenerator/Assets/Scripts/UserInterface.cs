@@ -21,7 +21,6 @@ public class UserInterface : MonoBehaviour
     [SerializeField] private TMP_InputField input;
 
     private string currentMenu;
-    private static UserInterface userInterface;
 
     private void Awake()
     {
@@ -34,6 +33,19 @@ public class UserInterface : MonoBehaviour
     }
 
 
+    public string FindCurrentActiveMenu()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).name.Contains("Menu") && transform.GetChild(i).gameObject.activeSelf)
+            {
+                return transform.GetChild(i).name;
+            }
+        }
+        return "";
+    }
+
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) EscapeKeyPressed();
@@ -42,14 +54,7 @@ public class UserInterface : MonoBehaviour
     
     private void EscapeKeyPressed()
     {
-        string currentMenu = "";
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            if (transform.GetChild(i).name.Contains("Menu") && transform.GetChild(i).gameObject.activeSelf)
-            {
-                currentMenu = transform.GetChild(i).name;
-            }
-        }
+        string currentMenu = FindCurrentActiveMenu();
         switch (currentMenu)
         {
             case "FreeRoamMenu":
@@ -58,15 +63,22 @@ public class UserInterface : MonoBehaviour
             case "StarMenu":
                 CloseMenu(currentMenu);
                 OpenMenu("FreeRoamMenu");
+                ClearCameraFocus();
+                FocusCamera.Instance.gameObject.SetActive(false);
                 break;
             case "PlanetMenu":
                 CloseMenu(currentMenu);
                 OpenMenu("FreeRoamMenu");
+                FocusCamera.Instance.gameObject.SetActive(false);
                 break;
             default:
                 Debug.Log("ERROR: No escape case set for this menu state");
                 break;
         }
+    }
+    private void ClearCameraFocus()
+    {
+        FocusCamera.Instance.focus = null;
     }
 
     public void OpenMenu(string menu)
