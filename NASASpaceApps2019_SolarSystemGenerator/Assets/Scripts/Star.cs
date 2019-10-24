@@ -8,8 +8,7 @@ public class Star : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (UserInterface.Instance.FindCurrentActiveMenu() == "PlanetMenu") return;
-        if (UserInterface.Instance.FindCurrentActiveMenu() == "StarMenu") return;
+        if (UserInterface.Instance.FindCurrentActiveMenu() != "FreeRoamMenu") return;
 
         UserInterface.Instance.OpenMenu("StarMenu");
         UserInterface.Instance.CloseMenu("FreeRoamMenu");

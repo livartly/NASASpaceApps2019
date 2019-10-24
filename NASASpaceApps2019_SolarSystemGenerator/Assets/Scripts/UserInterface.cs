@@ -16,6 +16,7 @@ public class UserInterface : MonoBehaviour
     [SerializeField] private GameObject freeRoamMenu;
     [SerializeField] private GameObject starMenu;
     [SerializeField] private GameObject planetMenu;
+    [SerializeField] private GameObject escapeMenu;
 
     [Header("Star Input")]
     [SerializeField] private Slider StarMassSlider;
@@ -37,26 +38,14 @@ public class UserInterface : MonoBehaviour
     [SerializeField] private Slider PlanetMassSlider;
     [SerializeField] private Slider MoonsSlider;
     [SerializeField] private Slider DistanceSlider;
-
-    [Header("Popups")]
-    [SerializeField] private Image popup1;
-    [SerializeField] private Image popup2;
-    [SerializeField] private Image popup3;
-    [SerializeField] private Image popup4;
-    [SerializeField] private Image popup5;
-    [SerializeField] private Image popup6;
-    [SerializeField] private Image popup7;
-    [SerializeField] private Image popup8;
-    [SerializeField] private Image popup9;
-    [SerializeField] private Image popup10;
-    [SerializeField] private Image popup11;
-
-
-
-
     private string currentMenu;
 
     public GameObject currentFocus;
+    [SerializeField] private GameObject moon;
+
+
+    [Header("Popups:")]
+    [SerializeField] private List<GameObject> popups;
 
 
     private void Awake()
@@ -89,24 +78,31 @@ public class UserInterface : MonoBehaviour
     }
 
     
-    private void EscapeKeyPressed()
+    public void EscapeKeyPressed()
     {
         string currentMenu = FindCurrentActiveMenu();
         switch (currentMenu)
         {
             case "FreeRoamMenu":
-                ExitGame();
+                CloseMenu(currentMenu);
+                OpenMenu("EscapeMenu");
                 break;
             case "StarMenu":
                 CloseMenu(currentMenu);
                 OpenMenu("FreeRoamMenu");
                 ClearCameraFocus();
                 FocusCamera.Instance.gameObject.SetActive(false);
+                ClosePopups();
                 break;
             case "PlanetMenu":
                 CloseMenu(currentMenu);
                 OpenMenu("FreeRoamMenu");
                 FocusCamera.Instance.gameObject.SetActive(false);
+                ClosePopups();
+                break;
+            case "EscapeMenu":
+                CloseMenu(currentMenu);
+                OpenMenu("FreeRoamMenu");
                 break;
             default:
                 Debug.Log("ERROR: No escape case set for this menu state");
@@ -116,6 +112,13 @@ public class UserInterface : MonoBehaviour
     private void ClearCameraFocus()
     {
         FocusCamera.Instance.focus = null;
+    }
+    private void ClosePopups()
+    {
+        foreach (GameObject go in popups) 
+        {
+            go.SetActive(false);
+        }
     }
 
     public void OpenMenu(string menu)
@@ -130,6 +133,10 @@ public class UserInterface : MonoBehaviour
                 break;
             case "PlanetMenu":
                 planetMenu.SetActive(true);
+                break;
+            case "EscapeMenu":
+                escapeMenu.SetActive(true);
+                Time.timeScale = 0;
                 break;
             default:
                 Debug.Log("Menu could not be opened: " + menu);
@@ -149,6 +156,10 @@ public class UserInterface : MonoBehaviour
                 break;
             case "PlanetMenu":
                 planetMenu.SetActive(false);
+                break;
+            case "EscapeMenu":
+                escapeMenu.SetActive(false);
+                Time.timeScale = 1;
                 break;
             default:
                 Debug.Log("Menu could not be closed: " + menu);
@@ -216,6 +227,11 @@ public class UserInterface : MonoBehaviour
         {
             case "StarMass":
                 currentFocus.transform.localScale = new Vector3(1,1,1) * StarMassSlider.value;
+                //clear planet trails
+                foreach (GameObject go in GameObject.FindGameObjectsWithTag("Planet"))
+                {
+                    go.transform.Find("ActualPlanet").GetComponent<TrailRenderer>().Clear();
+                }
                 break;
             case "StarAge":
                 currentFocus.GetComponent<Renderer>().material.SetColor("_EmissionColor", (Color.white / AgeSlider.value));
@@ -227,9 +243,27 @@ public class UserInterface : MonoBehaviour
                 currentFocus.transform.localScale = new Vector3(1, 1, 1) * PlanetMassSlider.value;
                 break;
             case "PlanetMoons":
+                //Delete current moons
+                foreach (GameObject go in currentFocus.GetComponent<Planet>().Moons)
+                {
+                    Destroy(go);
+                }
+                currentFocus.GetComponent<Planet>().Moons.Clear();
+                //Instantiate proper number of new moons
+                for (int i = 0; i < MoonsSlider.value; i++)
+                {
+                    GameObject go = Instantiate(moon, currentFocus.transform.parent);
+                    currentFocus.GetComponent<Planet>().Moons.Add(go);
+                    go.GetComponent<MoonOrbit>().staticBody = currentFocus;
+                    go.GetComponent<MoonOrbit>().distanceFromSurface = .25f + (i * 0.3f);
+                    go.GetComponent<MoonOrbit>().speed =  (0.003f + UnityEngine.Random.value) / 3;
+                    float scale = 0.1f + (UnityEngine.Random.value / 2);
+                    go.transform.localScale = new Vector3(scale, scale, scale);
+
+                }
                 break;
             case "PlanetDistance":
-                currentFocus.GetComponent<Orbit>().distanceFromSurface = 1 * DistanceSlider.value;
+                currentFocus.transform.parent.GetComponent<Orbit>().distanceFromSurface = 1 * DistanceSlider.value;
                 break;
         }
     }

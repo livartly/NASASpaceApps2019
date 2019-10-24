@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Planet : Sphere
 {
+    public List<GameObject> Moons;
+    
     //[Header("Planet Configurations:")] public int subDivisions;
 
     //void Start()
@@ -17,9 +19,7 @@ public class Planet : Sphere
 
     void OnMouseDown()
     {
-        if (UserInterface.Instance.FindCurrentActiveMenu() == "PlanetMenu") return;
-        if (UserInterface.Instance.FindCurrentActiveMenu() == "StarMenu") return;
-
+        if (UserInterface.Instance.FindCurrentActiveMenu() != "FreeRoamMenu") return;
 
         UserInterface.Instance.OpenMenu("PlanetMenu");
         UserInterface.Instance.CloseMenu("FreeRoamMenu");

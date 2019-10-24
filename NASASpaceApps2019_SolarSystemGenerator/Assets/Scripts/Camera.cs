@@ -7,8 +7,8 @@ public class Camera : MonoBehaviour
     private Camera() { }
     public static Camera Instance { get; private set; }
     
-    public float speedNormal = 20.0f;
-    public float speedFast = 100.0f;
+    public float speedNormal = 1.0f;
+    public float speedFast = 500.0f;
 
     public float mouseSensitivityX = 5.0f;
     public float mouseSensitivityY = 5.0f;
@@ -41,21 +41,23 @@ public class Camera : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftShift)) speed = speedFast;
             else speed = speedNormal;
 
+            
+
             if (Input.GetKey(KeyCode.W))
             {
-                GetComponent<Rigidbody>().AddForce(transform.forward * speed);
+                GetComponent<Rigidbody>().AddForce(transform.forward * speed, ForceMode.Impulse);
             }
             if (Input.GetKey(KeyCode.S))
             {
-                GetComponent<Rigidbody>().AddForce(-transform.forward * speed);
+                GetComponent<Rigidbody>().AddForce(-transform.forward * speed, ForceMode.Impulse);
             }
             if (Input.GetKey(KeyCode.A))
             {
-                GetComponent<Rigidbody>().AddForce(-transform.right * speed);
+                GetComponent<Rigidbody>().AddForce(-transform.right * speed, ForceMode.Impulse);
             }
             if (Input.GetKey(KeyCode.D))
             {
-                GetComponent<Rigidbody>().AddForce(transform.right * speed);
+                GetComponent<Rigidbody>().AddForce(transform.right * speed, ForceMode.Impulse);
             }
             if (Input.GetMouseButton(1))
             {

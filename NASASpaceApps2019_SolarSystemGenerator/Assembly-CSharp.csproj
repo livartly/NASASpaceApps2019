@@ -57,9 +57,10 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Camera.cs" />
      <Compile Include="Assets\Scripts\FocusCamera.cs" />
-     <Compile Include="Assets\Scripts\MouseOverPopUp.cs" />
+     <Compile Include="Assets\Scripts\MoonOrbit.cs" />
      <Compile Include="Assets\Scripts\Orbit.cs" />
      <Compile Include="Assets\Scripts\Planet.cs" />
+     <Compile Include="Assets\Scripts\Popup.cs" />
      <Compile Include="Assets\Scripts\Rotation.cs" />
      <Compile Include="Assets\Scripts\Sphere.cs" />
      <Compile Include="Assets\Scripts\Star.cs" />

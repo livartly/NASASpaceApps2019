@@ -11,7 +11,7 @@ public class Rotation : MonoBehaviour
 
     public Vector3 rotationAxis = Vector3.up;
 
-    private void Update()
+    private void FixedUpdate()
     {
         transform.RotateAround(transform.position, rotationAxis, 360f * Time.deltaTime * speed);
     }

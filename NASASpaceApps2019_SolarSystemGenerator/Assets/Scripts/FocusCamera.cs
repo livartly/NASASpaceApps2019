@@ -22,7 +22,10 @@ public class FocusCamera : MonoBehaviour
     void Update()
     {
 
-        if (focus != null) transform.position = focus.transform.position + new Vector3(0, 0, -(focus.transform.localScale.x + 1));
+        if (focus != null)
+        {
+            transform.position = focus.transform.position + new Vector3(0, 0, -(focus.transform.localScale.x + 1));
+        }
     }
 
 }
