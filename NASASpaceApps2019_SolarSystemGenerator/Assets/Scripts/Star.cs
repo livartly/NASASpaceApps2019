@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Star : MonoBehaviour
 {
-    
+    public float age;
+    public float temperature;
 
     void OnMouseDown()
     {
         if (UserInterface.Instance.FindCurrentActiveMenu() != "FreeRoamMenu") return;
-
+        FocusCamera.Instance.focus = gameObject;
+        UserInterface.Instance.currentFocus = gameObject;
         UserInterface.Instance.OpenMenu("StarMenu");
         UserInterface.Instance.CloseMenu("FreeRoamMenu");
-        UserInterface.Instance.currentFocus = gameObject;
-        FocusCamera.Instance.focus = gameObject;
+        
+        
         FocusCamera.Instance.gameObject.SetActive(true);
     }
 }

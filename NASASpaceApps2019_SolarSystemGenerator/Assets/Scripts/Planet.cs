@@ -5,26 +5,32 @@ using UnityEngine;
 public class Planet : Sphere
 {
     public List<GameObject> Moons;
-    
-    //[Header("Planet Configurations:")] public int subDivisions;
+    public float mass;
+    public float numberOfMoons;
+    public float distance;
+    public Material mat;
 
-    //void Start()
-    //{
-    //    InitAsIcosahedron();
-    //    Subdivide(subDivisions);
-    //    StartCoroutine(GenerateMeshPieceByPiece(0.02f, 10));
-    //}
+    void Start()
+    {
+        distance = transform.parent.GetComponent<Orbit>().distanceFromSurface;
+        mass = transform.localScale.x;
+        numberOfMoons = 0;
+        mat = GetComponent<MeshRenderer>().material;
+    }
 
 
 
     void OnMouseDown()
     {
         if (UserInterface.Instance.FindCurrentActiveMenu() != "FreeRoamMenu") return;
-
-        UserInterface.Instance.OpenMenu("PlanetMenu");
-        UserInterface.Instance.CloseMenu("FreeRoamMenu");
-        UserInterface.Instance.currentFocus = gameObject;
         FocusCamera.Instance.focus = gameObject;
+        UserInterface.Instance.currentFocus = gameObject;
+
+
+        UserInterface.Instance.CloseMenu("FreeRoamMenu");
+        UserInterface.Instance.OpenMenu("PlanetMenu");
+        
+        
         FocusCamera.Instance.gameObject.SetActive(true);
     }
 

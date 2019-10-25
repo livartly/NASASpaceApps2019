@@ -38,6 +38,7 @@ public class UserInterface : MonoBehaviour
     [SerializeField] private Slider PlanetMassSlider;
     [SerializeField] private Slider MoonsSlider;
     [SerializeField] private Slider DistanceSlider;
+    
     private string currentMenu;
 
     public GameObject currentFocus;
@@ -46,6 +47,10 @@ public class UserInterface : MonoBehaviour
 
     [Header("Popups:")]
     [SerializeField] private List<GameObject> popups;
+    
+    [Header("Planet Materials:")]
+    [SerializeField] private List<Material> planetMaterials;
+
 
 
     private void Awake()
@@ -95,13 +100,13 @@ public class UserInterface : MonoBehaviour
                 ClosePopups();
                 break;
             case "PlanetMenu":
-                CloseMenu(currentMenu);
+                CloseMenu("PlanetMenu");
                 OpenMenu("FreeRoamMenu");
                 FocusCamera.Instance.gameObject.SetActive(false);
                 ClosePopups();
                 break;
             case "EscapeMenu":
-                CloseMenu(currentMenu);
+                CloseMenu("EscapeMenu");
                 OpenMenu("FreeRoamMenu");
                 break;
             default:
@@ -130,9 +135,17 @@ public class UserInterface : MonoBehaviour
                 break;
             case "StarMenu":
                 starMenu.SetActive(true);
+                StarMassSlider.value = currentFocus.transform.localScale.x;
+                TemperatureSlider.value = currentFocus.GetComponent<Star>().temperature;
+                AgeSlider.value = currentFocus.GetComponent<Star>().age;
                 break;
             case "PlanetMenu":
                 planetMenu.SetActive(true);
+                PlanetMassSlider.value = currentFocus.GetComponent<Planet>().mass;
+                MoonsSlider.value = currentFocus.GetComponent<Planet>().numberOfMoons;
+                DistanceSlider.value = currentFocus.GetComponent<Planet>().distance;
+                //set toggles
+                    
                 break;
             case "EscapeMenu":
                 escapeMenu.SetActive(true);
@@ -191,28 +204,135 @@ public class UserInterface : MonoBehaviour
     {
         switch (button)
         {
-            case "Arg":
+            case "ArgAtmo":
                 if (ArgonAtmo.interactable)
                 {
                     ArgonAtmo.interactable = false;
+                    if (WaterOnPlanet.isOn)
+                    {
+                        currentFocus.GetComponent<MeshRenderer>().material = planetMaterials[4];
+                        currentFocus.GetComponent<Planet>().mat = planetMaterials[4];
+                    }
+                    else 
+                    { 
+                        currentFocus.GetComponent<MeshRenderer>().material = planetMaterials[5];
+                        currentFocus.GetComponent<Planet>().mat = planetMaterials[5];
+                    }
                 }
                 else ArgonAtmo.interactable = true;
                 break;
-            case "Oxy":
-                if (OxygenAtmo.interactable) OxygenAtmo.interactable = false;
+            case "OxyAtmo":
+                if (OxygenAtmo.interactable)
+                {
+                    OxygenAtmo.interactable = false;
+                    if (WaterOnPlanet.isOn)
+                    {
+                        currentFocus.GetComponent<MeshRenderer>().material = planetMaterials[11];
+                        currentFocus.GetComponent<Planet>().mat = planetMaterials[11];
+                    }
+                    else
+                    {
+                        currentFocus.GetComponent<MeshRenderer>().material = planetMaterials[12];
+                        currentFocus.GetComponent<Planet>().mat = planetMaterials[12];
+                    }
+                }
                 else OxygenAtmo.interactable = true;
                 break;
-            case "Met":
-                if (MethaneAtmo.interactable) MethaneAtmo.interactable = false;
+            case "MetAtmo":
+                if (MethaneAtmo.interactable)
+                {
+                    MethaneAtmo.interactable = false;
+                    if (WaterOnPlanet.isOn)
+                    {
+                        currentFocus.GetComponent<MeshRenderer>().material = planetMaterials[9];
+                        currentFocus.GetComponent<Planet>().mat = planetMaterials[9];
+                    }
+                    else
+                    {
+                        currentFocus.GetComponent<MeshRenderer>().material = planetMaterials[10];
+                        currentFocus.GetComponent<Planet>().mat = planetMaterials[10];
+                    }
+                }
                 else MethaneAtmo.interactable = true;
                 break;
-            case "Amm":
-                if (AmmoniaAtmo.interactable) AmmoniaAtmo.interactable = false;
+            case "AmmAtmo":
+                if (AmmoniaAtmo.interactable)
+                {
+                    AmmoniaAtmo.interactable = false;
+                    if (WaterOnPlanet.isOn)
+                    {
+                        currentFocus.GetComponent<MeshRenderer>().material = planetMaterials[1];
+                        currentFocus.GetComponent<Planet>().mat = planetMaterials[1];
+                    }
+                    else
+                    {
+                        currentFocus.GetComponent<MeshRenderer>().material = planetMaterials[2];
+                        currentFocus.GetComponent<Planet>().mat = planetMaterials[2];
+                    }
+                }
                 else AmmoniaAtmo.interactable = true;
                 break;
-            case "Car":
-                if (CarbonDioxideAtmo.interactable) CarbonDioxideAtmo.interactable = false;
+            case "CarAtmo":
+                if (CarbonDioxideAtmo.interactable)
+                {
+                    CarbonDioxideAtmo.interactable = false;
+                    if (WaterOnPlanet.isOn)
+                    {
+                        currentFocus.GetComponent<MeshRenderer>().material = planetMaterials[6];
+                        currentFocus.GetComponent<Planet>().mat = planetMaterials[6];
+                    }
+                    else
+                    {
+                        currentFocus.GetComponent<MeshRenderer>().material = planetMaterials[7];
+                        currentFocus.GetComponent<Planet>().mat = planetMaterials[7];
+                    }
+                }
                 else CarbonDioxideAtmo.interactable = true;
+                break;
+            case "AlkGas":
+                if (AlkaliClass.interactable)
+                {
+                    AlkaliClass.interactable = false;
+                    currentFocus.GetComponent<MeshRenderer>().material = planetMaterials[0];
+                    currentFocus.GetComponent<Planet>().mat = planetMaterials[0];
+                }
+                else AlkaliClass.interactable = true;
+                break;
+            case "AmmGas":
+                if (AmmoniaGiantClass.interactable)
+                {
+                    AmmoniaGiantClass.interactable = false;
+                    currentFocus.GetComponent<MeshRenderer>().material = planetMaterials[3];
+                    currentFocus.GetComponent<Planet>().mat = planetMaterials[3];
+                }
+                else AmmoniaGiantClass.interactable = true;
+                break;
+            case "CloGas":
+                if (CloudlessClass.interactable)
+                {
+                    CloudlessClass.interactable = false;
+                    currentFocus.GetComponent<MeshRenderer>().material = planetMaterials[8];
+                    currentFocus.GetComponent<Planet>().mat = planetMaterials[8];
+                }
+                else CloudlessClass.interactable = true;
+                break;
+            case "SilGas":
+                if (SilicateClass.interactable)
+                {
+                    SilicateClass.interactable = false;
+                    currentFocus.GetComponent<MeshRenderer>().material = planetMaterials[13];
+                    currentFocus.GetComponent<Planet>().mat = planetMaterials[13];
+                }
+                else SilicateClass.interactable = true;
+                break;
+            case "WatGas":
+                if (WaterGiantClass.interactable)
+                {
+                    WaterGiantClass.interactable = false;
+                    currentFocus.GetComponent<MeshRenderer>().material = planetMaterials[14];
+                    currentFocus.GetComponent<Planet>().mat = planetMaterials[14];
+                }
+                else WaterGiantClass.interactable = true;
                 break;
             default:
                 Debug.Log("ERROR: No escape case set for this menu state");
@@ -235,14 +355,18 @@ public class UserInterface : MonoBehaviour
                 break;
             case "StarAge":
                 currentFocus.GetComponent<Renderer>().material.SetColor("_EmissionColor", (Color.white / AgeSlider.value));
+                currentFocus.GetComponent<Star>().age = AgeSlider.value;
                 break;
             case "StarTemperature":
                 currentFocus.transform.GetChild(0).GetComponent<Renderer>().material.SetColor("_EmissionColor", (Color.white / 10) * TemperatureSlider.value);
+                currentFocus.GetComponent<Star>().temperature = TemperatureSlider.value;
                 break;
             case "PlanetMass":
                 currentFocus.transform.localScale = new Vector3(1, 1, 1) * PlanetMassSlider.value;
+                currentFocus.GetComponent<Planet>().mass = PlanetMassSlider.value;
                 break;
             case "PlanetMoons":
+                currentFocus.GetComponent<Planet>().numberOfMoons = MoonsSlider.value;
                 //Delete current moons
                 foreach (GameObject go in currentFocus.GetComponent<Planet>().Moons)
                 {
@@ -264,6 +388,7 @@ public class UserInterface : MonoBehaviour
                 break;
             case "PlanetDistance":
                 currentFocus.transform.parent.GetComponent<Orbit>().distanceFromSurface = 1 * DistanceSlider.value;
+                currentFocus.GetComponent<Planet>().distance = DistanceSlider.value;
                 break;
         }
     }
@@ -273,15 +398,34 @@ public class UserInterface : MonoBehaviour
         Application.OpenURL(URL);
     }
 
-    public void PushButton(string button)
+    public void OnWaterToggleChangeValue()
     {
-        switch (button)
+        if (WaterOnPlanet.isOn)
         {
-            case "ArgonAtmo":
-                break;
+            if (currentFocus.GetComponent<Planet>().mat == planetMaterials[1])
+            {
+                currentFocus.GetComponent<Planet>().mat = planetMaterials[2];
+            }
+            else if (currentFocus.GetComponent<Planet>().mat == planetMaterials[4])
+            {
+                currentFocus.GetComponent<Planet>().mat = planetMaterials[5];
+            }
+            else if (currentFocus.GetComponent<Planet>().mat == planetMaterials[6])
+            {
+                currentFocus.GetComponent<Planet>().mat = planetMaterials[7];
+            }
+            else if (currentFocus.GetComponent<Planet>().mat == planetMaterials[9])
+            {
+                currentFocus.GetComponent<Planet>().mat = planetMaterials[10];
+            }
+            else if (currentFocus.GetComponent<Planet>().mat == planetMaterials[11])
+            {
+                currentFocus.GetComponent<Planet>().mat = planetMaterials[12];
+            }
+        }
+        else
+        {
+
         }
     }
-    
-
-
 }
