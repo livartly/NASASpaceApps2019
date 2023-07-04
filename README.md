@@ -1,5 +1,7 @@
 # PLAN-IT 
 
+![image](https://github.com/livartly/NASASpaceApps2019/assets/35756586/74bb13dd-4372-4514-b88d-3aaafd4bf1d9)
+
 Plan-It is a game that allows the player to create their own solar system with unique and intriguing planets. Our aim is to spark interest in astrophysics by providing an easy and enjoyable introduction to space study.
 
 ## About Us
@@ -12,10 +14,6 @@ Plan-It is a sandbox game intended to educate its users on various astrophysical
 
 Users begin by focusing on a star at the center of a large solar system. The menu surrounding the star displays its characteristics and allows the user to modify its properties. We also provide links for users to learn more about the star. Similarly, users can explore planets and their properties.
 
-## Future Plans
-
-We aim to expand our game by introducing education about different types of stars and uncommon solar systems (like binary or young systems). Our goal is to enhance the planetary experience by adding complexity and user reactivity. We also hope to animate the educational aspects and create a more interactive experience tailored to each user's knowledge level.
-
 ## Built With
 
 - Unity
@@ -24,7 +22,9 @@ We aim to expand our game by introducing education about different types of star
 
 ## Try It Out
 
-Play Plan-It online [here](http://livartly.com/plan-it.html). Press 'Escape' to view the instructions.
+Play Plan-It online [here](https://erikfailing.itch.io/plan-it-nasa). Press 'Escape' to view the instructions.
+
+![image](https://github.com/livartly/NASASpaceApps2019/assets/35756586/641dbf4f-b44d-409f-abf4-b252ce817622)
 
 ## Acknowledgements
 
